@@ -1,0 +1,20 @@
+{% extends 'doctor/base_doctor.html' %}
+
+{% block title %}Doctor Dashboard{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <h1>Welcome, {{ user.get_username }}</h1>
+{% else %}
+    <h1>
+        Please <a href="{% url '' %}">Signin</a>
+    </h1>
+
+{% endif %}
+
+{% for message in messages %}
+    <div class="alert alert-danger">{{ message }}</div>
+{% endfor %}
+
+{% endblock %}

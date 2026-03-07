@@ -1,0 +1,38 @@
+{% extends 'hospital/base_hospital.html'%}
+
+{% block title %} View Doctors {% endblock %}
+
+{% block extra_styles %}
+
+    <style>
+        .container {
+            width: 90%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-evenly;
+        }
+        .card {
+            width: 40%;
+            text-align: left;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div>
+
+    </div>
+
+    <div class="container">
+        {% for  doctor in doctors_list %}
+        <div class="card">
+            <p>Name: Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}</p>
+            <p>Email: {{ doctor.user.email }}</p>
+            <p>Specialization: {{ doctor.specialization }}</p>
+            <p>License number: {{ doctor.license }}</p>
+        </div>
+        {% empty %}
+            <p>No Data.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

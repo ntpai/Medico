@@ -1,8 +1,9 @@
-{% extends 'users/base_users.html' %}
+{% extends 'hospital/base_hospital.html' %}
 
 {% block title %}User Registration{% endblock %}
 
-{% block extra_styles %} 
+{% block extra_styles %}
+
     <style>
         .container {
             max-width: 60vh;
@@ -29,7 +30,7 @@
             <em><strong>{{ field.errors }}</strong></em>
         </div>
         {% endfor %}
-        {% for field in profile_form %}
+        {% for field in hospital_profile_form %}
         <div class="forms-div">
             <div>
                 {{ field.label_tag }}

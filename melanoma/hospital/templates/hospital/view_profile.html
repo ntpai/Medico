@@ -1,0 +1,41 @@
+{% extends 'hospital/base_hospital.html' %}
+
+{% block extra_styles %}
+
+    <style>
+        .card {
+            width: 60%;
+            margin: 5rem auto 0 auto;
+            padding: 0;
+            display: flex;
+            border: 1px solid black;
+        }
+
+        #section-1 {
+            width: 40%;
+            border-right: 1px solid black;
+        }
+
+        #section-2 {
+            width: 60%;
+            text-align: left;
+            margin: 0 0 0 2rem;
+        }
+
+        #section-2 h3 {
+            padding: 0.5rem;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="card">
+        <div id="section-1"> TO ADD: Image properties</div>
+        <div id="section-2">
+            <h3><strong>Hospital Name: </strong> {{ hospital_name }}</h3>
+            <h3><strong>License: </strong> {{ license }}</h3>
+            <h3><strong>Address: </strong> {{ address }}</h3>
+            <h3><strong>Contact email: </strong> {{ contact_email }}</h3>
+            <h3><strong>Approved: </strong> {{ is_approved }}</h3>
+        </div>
+    </div>
+{% endblock %}

@@ -164,6 +164,7 @@ input[type="email"] {
 .forms-div label,
 .forms-div input,
 .forms-div ul,
+.forms-div textarea,
 .forms-div select
 {
     display: flex;
@@ -173,4 +174,9 @@ input[type="email"] {
 .forms-div select {
     width: 60%;
     height: 1.5rem;
+}
+
+.forms-div textarea {
+    width: 60%;
+    height: 3rem;
 }

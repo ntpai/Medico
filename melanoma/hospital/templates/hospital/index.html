@@ -1,20 +1,60 @@
-{% extends 'users/base_users.html' %}
+{% extends 'hospital/base_hospital.html' %}
 
 {% block title %}User Home{% endblock %}
 
+{% block extra_styles %}
+    <style>
+        .index-list {
+            display: flex;
+            padding: 4rem;
+            justify-content: space-evenly;
+            gap: 0.7rem;
+        }
+
+        .card {
+            width: 25%;
+            height: auto;
+            transition: 0.2s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.06);
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
+    {% if user.is_authenticated %}
+    <div class="index-list">
+        <div class="card">
+            <h2>Hospital Dashboard</h2>
+            <button class="btn btn-primary"><a href="{% url 'view_doctors' %}">View Doctors</a></button>
+        </div>
+        <div class="card">
+            <h2>Add Doctor</h2>
+            <button class="btn btn-primary"><a href="{% url 'add_doctor' %}">Add Doctor</a></button>
+        </div>
+        <div class="card">
+            <h2>View Doctor Appointments</h2>
+            <button class="btn btn-primary"><a>View Appointments</a></button>
+        </div>
+    </div>
 
-{% if user.is_authenticated %}
-    <h1>Welcome, {{ user.get_username }}</h1>
-{% else %}
-    <h1>
-        Please <a href="{% url 'user_signup' %}">Signup</a> or <a href="{% url 'user_signin' %}">Signin</a>
-    </h1>
+    {% else %}
+    <div class="index-list">
+        <div class="card">
 
-{% endif %}
+            <h2>Hospital Dashboard</h2>
+            <h3>
+                <a href="{% url 'hospital_signup' %}">Signup </a> or
+                <a href="{% url 'hospital_signin' %}">Signin</a> here
+            </h3>
 
-{% for message in messages %}
-    <div class="alert alert-danger">{{ message }}</div>
-{% endfor %}
-
+        </div>
+        <div class="card">
+            <h2>Doctor Dashboard</h2>
+            <h3><a href="{% url 'doctor_signin' %}">Signin</a> here</h3>
+        </div>
+    </div>
+    {% endif %}
 {% endblock %}

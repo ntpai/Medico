@@ -7,9 +7,10 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="icon" type="image/png" href="{% static 'icons/favicon.png' %}">
-
+    <style>
     {% block extra_styles %}
     {% endblock %}
+    </style>
 
 </head>
 <body>
@@ -17,13 +18,12 @@
         <p class="navbar-brand">
             <a href="{% url 'home' %}">Medico</a>
         </p>
-        {% if user.is_authenticated %}
-            <div>
-                <a href="{% url 'hospital_home' %}">Hospital Dashboard</a>&nbsp;&nbsp;|
-                <a href="{% url 'hospital_view_profile' %}">View profile</a>
-                <a href="{% url 'hospital_logout' %}">Logout</a>
-            </div>
-        {% endif %}
+        <!-- This dashboard does not need to check if the user is authenticated because the page needs login to view  -->
+        <div>
+            Welcome, Dr. {{ user.first_name }}&nbsp;&nbsp;|
+            <a href="{% url 'doctor_dashboard' %}">Dashboard</a>
+            <a href="#">Appointments</a>
+        </div>
     </nav>
     <div id="content">
         {% block content %}

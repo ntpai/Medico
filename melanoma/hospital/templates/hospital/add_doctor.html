@@ -1,0 +1,40 @@
+{% extends 'hospital/base_hospital.html' %}
+
+{% block extra_styles %}
+    <style>
+        .card {
+        width: 40%;
+        margin: 4rem auto 0 auto;
+    }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    {% for message in messages %}
+            <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+    <div class="card">
+        <form method="post">
+            {% csrf_token %}
+            <div class="forms-div">
+                <h2 style="align-content: center">Register Doctor</h2>
+                {% for field in user_form %}
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {{ field.errors }}
+                {% endfor %}
+                {% for field in profile_form %}
+                    {{ field.label_tag }}
+                    {{ field }}
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-secondary">Reset</button>
+                <button type="reset" class="btn btn-secondary">
+                    <a href="{% url 'hospital_home' %}">Cancel</a>
+                </button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

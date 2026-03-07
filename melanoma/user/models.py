@@ -39,10 +39,11 @@ class HospitalProfile(models.Model):
         status = "Approved" if self.is_approved else "Approval Pending"
         return f"{self.hospital_name} {status}"
 
-class Doctor(models.Model):
+class DoctorProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     hospital = models.ForeignKey(HospitalProfile, on_delete=models.CASCADE)
     specialization = models.CharField(max_length=100)
+    license = models.CharField(max_length=50, unique=True, blank=True)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
