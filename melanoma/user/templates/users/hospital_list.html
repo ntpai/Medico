@@ -1,0 +1,10 @@
+{% extends 'users/base_users.html' %}
+
+{% block title%}Active hospitals{% endblock %}
+
+{% block content %}
+    {% for field in hospitals %}
+        {{ field }}
+        <a href="{% url 'patient_list_doctors' field.pk %}">View Doctors</a>
+    {% endfor %}
+{% endblock %}
