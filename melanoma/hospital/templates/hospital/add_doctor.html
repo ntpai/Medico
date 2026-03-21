@@ -11,9 +11,6 @@
 
 {% block content %}
 
-    {% for message in messages %}
-            <div class="alert alert-danger">{{ message }}</div>
-    {% endfor %}
     <div class="card">
         <form method="post">
             {% csrf_token %}

@@ -1,10 +1,39 @@
 {% extends 'users/base_users.html' %}
 
 {% block title%}Active hospitals{% endblock %}
+{% block extra_styles%}
+
+    <style>
+        .container {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            gap: 30px;
+            padding: 1rem 0 1rem 2rem;
+        }
+        .card {
+            width: 350px;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+        
+        .btn {
+            margin-top: auto;
+        }
+    </style>
+
+{% endblock %}
 
 {% block content %}
-    {% for field in hospitals %}
-        {{ field }}
-        <a href="{% url 'patient_list_doctors' field.pk %}">View Doctors</a>
-    {% endfor %}
+    <div class="container">
+        {% for field in hospitals %}
+        <div class="card">
+            <h3>{{ field.hospital_name }}</h3>
+            <p>Address: {{ field.address }}</p>
+            <button class="btn btn-primary"><a href="{% url 'patient_doctors_list' field.id %}">View Doctors</a></button>
+        </div>
+        {% endfor %}
+    </div>
 {% endblock %}

@@ -15,7 +15,7 @@
     </style>
 {% endblock %}
 {% block content %}
-    <div>
+    <div >
         {% if is_valid  %}
             <div class="card container">
                 <h2>Result: {{ label }}</h2>
@@ -30,9 +30,8 @@
                     </div>
                 </div>
                 <div>
-                    <button class="btn btn-primary"><a href="#">Book Appointment</a></button>
+                    <button class="btn btn-primary"><a href="{% url 'patient_hospitals_list' %}">View Hospitals</a></button>
                     <button class="btn btn-secondary"><a href="{% url 'upload_image' %}">Upload another Image</a></button>
-
                 </div>
             </div>
         {% else %}

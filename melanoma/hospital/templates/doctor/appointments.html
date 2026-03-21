@@ -1,10 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'doctor/base_doctor.html' %}
+
+{% block extra_styles %}
+
+    <style>
+        .container {
+            width: 95%;
+        }
+
+    </style>
+
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <h2>My Schedule for {{ today|date:"F d, Y" }}</h2>
+
+        <table class="admin-table">
+            <thead>
+            <tr>
+                <th>Time</th>
+                <th>Patient Name</th>
+                <th>Status</th>
+                <th>Images</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for appt in appointments %}
+                <tr>
+                    <td>{{ appt.appointment_time|time:"h:i A" }}</td>
+                    <td>{{ appt.patient.user.first_name }} {{ appt.patient.user.last_name }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'doctor_appointments' %}" style="display: flex; gap: 10px;">
+                            {% csrf_token %}
+                            <input type="hidden" name="appointment_id" value="{{ appt.id }}">
+
+                            <select name="status" class="status-dropdown">
+                                <option value="Pending" {% if appt.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                <option value="Confirmed" {% if appt.status == 'Confirmed' %}selected{% endif %}>Confirmed</option>
+                                <option value="Completed" {% if appt.status == 'Completed' %}selected{% endif %}>Completed</option>
+                                <option value="Cancelled" {% if appt.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                            </select>
+
+                            <button type="submit" class="btn-update">Update</button>
+                        </form>
+                    </td>
+                    <td>
+                        <a href="{% url 'view_patient_images' appt.patient.id %}" class="btn-view-records">
+                            📂 View Images
+                        </a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3" style="text-align: center; color: #666;">
+                        You have no appointments scheduled for today. Enjoy the break!
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,10 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'doctor/base_doctor.html' %}
+
+{% block extra_styles %}
+    <style>
+        .gallery-wrapper { padding: 20px; max-width: 1200px; margin: auto; }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        .image-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .image-card:hover { transform: translateY(-5px); }
+
+        .img-container { position: relative; height: 200px; cursor: pointer; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        .zoom-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); color: white;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: 0.3s;
+        }
+        .img-container:hover .zoom-overlay { opacity: 1; }
+
+        .card-body { padding: 15px; }
+        .upload-date { font-size: 0.85em; color: #64748b; margin-bottom: 8px; }
+        .user-notes { font-size: 0.95em; color: #1e293b; }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="gallery-wrapper">
+        <div class="header">
+            <h2>Medical Records for {{ patient.user.get_full_name }}</h2>
+            <p>Total Records: {{ images.count }}</p>
+        </div>
+
+        <div class="image-grid">
+            {% for img in images %}
+            <div class="image-card">
+                <div class="img-container" onclick="window.open('{{ img.image.url }}', '_blank')">
+                    <img src="{{ img.image.url }}" alt="Patient Record">
+                    <div class="zoom-overlay">🔍 Click to Enlarge</div>
+                </div>
+
+                <div class="card-body">
+                    <p class="upload-date">📅 {{ img.upload_at|date:"F d, Y" }}</p>
+                    <p class="user-notes"><strong>Notes:</strong> {{ img.user_notes }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+                <p>No medical records have been uploaded by this patient yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

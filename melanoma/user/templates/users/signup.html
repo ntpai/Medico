@@ -13,38 +13,52 @@
 
 {% block content %}
 
-<div class="container card">
-    <h1>Sign up</h1>
-    {% for message in messages %}
-        <div class="alert alert-danger">{{ message }}</div>
-    {% endfor %}
-    <form method="post">
-        {% csrf_token %}
-        {% for field in user_form %}
-        <div class="forms-div">
-            <div>
-                {{ field.label_tag }}
-                {{ field }}
-            </div>
-            <em><strong>{{ field.errors }}</strong></em>
+<div class="auth-wrapper">
+    <div class="auth-card signup-card">
+
+        <div class="auth-header">
+            <h2>Create an Account</h2>
+            <p>Join the Medico network to manage your healthcare.</p>
         </div>
-        {% endfor %}
-        {% for field in profile_form %}
-        <div class="forms-div">
-            <div>
-                {{ field.label_tag }}
-                {{ field }}
+
+        <form method="POST" action="">
+            {% csrf_token %}
+
+            <div class="form-grid-container">
+
+                {% for field in user_form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+
+                    {% if field.errors %}
+                        <span class="error-text">{{ field.errors }}</span>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                {% for field in profile_form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+
+                    {% if field.errors %}
+                        <span class="error-text">{{ field.errors }}</span>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
             </div>
-            <em><strong>{{ field.errors }}</strong></em>
-        </div>
-        {% endfor %}
-        <span>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="submit" class="btn btn-secondary">
-                <a href="{% url 'user_signin' %}">Signin</a>
-            </button>
-        </span>
-    </form>
+
+            <button type="submit" class="btn-auth btn-submit">Submit Registration</button>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="{% url 'user_signin' %}" class="signup-link">Sign In here</a></p>
+            </div>
+
+        </form>
+
+    </div>
 </div>
 
 {% endblock %}

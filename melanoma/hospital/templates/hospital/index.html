@@ -20,11 +20,263 @@
         .card:hover {
             transform: scale(1.06);
         }
+        /* Container for the whole page content */
+        .admin-dashboard-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Welcome Banner Styling */
+        .admin-welcome-banner {
+            background-color: #f8fafc;
+            border-left: 5px solid #2563eb; /* Medico Blue */
+            padding: 25px 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .admin-welcome-banner h2 {
+            color: #1e3a8a;
+            margin: 0 0 10px 0;
+            font-size: 1.8em;
+        }
+
+        .admin-welcome-banner p {
+            color: #475569;
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        /* Stat Box Grid */
+        .admin-stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        /* Individual Stat Box */
+        .admin-stat-box {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+
+        .admin-stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+        }
+
+        .stat-icon {
+            font-size: 2.5em;
+            margin-right: 20px;
+            background: #eff6ff;
+            padding: 15px;
+            border-radius: 50%;
+        }
+
+        .stat-info h3 {
+            margin: 0;
+            font-size: 2em;
+            color: #1e293b;
+        }
+
+        .stat-info p {
+            margin: 5px 0 0 0;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Header for your existing action cards */
+        .admin-actions-header {
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .admin-actions-header h3 {
+            color: #1e293b;
+            margin: 0 0 5px 0;
+            font-size: 1.5em;
+        }
+
+        .admin-actions-header p {
+            color: #64748b;
+            margin: 0;
+        }
+        /* Wrapper to center everything on the screen */
+        .portal-wrapper {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+
+        /* Header Styling */
+        .portal-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .portal-header h2 {
+            color: #1e3a8a; /* Deep professional blue */
+            font-size: 2.2em;
+            margin: 0 0 10px 0;
+        }
+
+        .portal-header p {
+            color: #64748b;
+            font-size: 1.1em;
+            margin: 0;
+        }
+
+        .portal-grid {
+            display: flex;
+            flex-direction: row; /* Strictly forces a horizontal row */
+            gap: 40px; /* Adds a bit more breathing room between them */
+            max-width: 1000px; /* Widened slightly to fit both cards perfectly */
+            width: 100%;
+            justify-content: center;
+        }
+
+        .portal-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 40px 30px;
+
+            flex: 1; /* Crucial: Makes both cards take up exactly 50% of the available row space */
+            min-width: 320px; /* Prevents them from getting too skinny on smaller laptops */
+
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+            border-color: #93c5fd;
+        }
+
+        .portal-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .portal-card h3 {
+            color: #1e293b;
+            font-size: 1.5em;
+            margin: 0 0 15px 0;
+        }
+
+        .portal-card p {
+            color: #475569;
+            font-size: 0.95em;
+            line-height: 1.5;
+            margin-bottom: 30px;
+            min-height: 65px; /* Keeps buttons aligned even if text length varies */
+        }
+
+        /* Action Buttons */
+        .portal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-auth {
+            padding: 12px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+            flex: 1; /* Makes buttons equal width */
+        }
+
+        .btn-login {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .btn-login:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-register {
+            background-color: transparent;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+        }
+
+        .btn-register:hover {
+            background-color: #eff6ff;
+        }
+
+        /* Small note for the doctor card */
+        .card-footer-note {
+            margin-top: 20px;
+            font-size: 0.8em;
+            color: #94a3b8;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 15px;
+        }
     </style>
 {% endblock %}
 
 {% block content %}
     {% if user.is_authenticated %}
+    <div class="admin-dashboard-container">
+
+        <div class="admin-welcome-banner">
+            <h2>Welcome to the Medico Administration Panel</h2>
+            <p>Manage your hospital staff, oversee daily appointments, and monitor facility operations.</p>
+        </div>
+
+        <div class="admin-stats-overview">
+            <div class="admin-stat-box">
+                <div class="stat-icon">👨‍⚕️</div>
+                <div class="stat-info">
+                    <h3>{{ total_doctors|default:"0" }}</h3>
+                    <p>Registered Doctors</p>
+                </div>
+            </div>
+
+            <div class="admin-stat-box">
+                <div class="stat-icon">🏥</div>
+                <div class="stat-info">
+                    <h3>{{ total_patients|default:"0" }}</h3>
+                    <p>Total Patients</p>
+                </div>
+            </div>
+
+            <div class="admin-stat-box">
+                <div class="stat-icon">📅</div>
+                <div class="stat-info">
+                    <h3>{{ appointments_today|default:"0" }}</h3>
+                    <p>Appointments Today</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-actions-header">
+            <h3>Administrative Actions</h3>
+            <p>Select an action below to manage hospital records.</p>
+        </div>
+
+    </div>
     <div class="index-list">
         <div class="card">
             <h2>Hospital Dashboard</h2>
@@ -36,24 +288,42 @@
         </div>
         <div class="card">
             <h2>View Doctor Appointments</h2>
-            <button class="btn btn-primary"><a>View Appointments</a></button>
+            <button class="btn btn-primary"><a href="{% url 'hospital_appointments' %}">View Appointments</a></button>
         </div>
     </div>
 
     {% else %}
-    <div class="index-list">
-        <div class="card">
+    <div class="portal-wrapper">
 
-            <h2>Hospital Dashboard</h2>
-            <h3>
-                <a href="{% url 'hospital_signup' %}">Signup </a> or
-                <a href="{% url 'hospital_signin' %}">Signin</a> here
-            </h3>
-
+        <div class="portal-header">
+            <h2>Staff & Administration Portal</h2>
+            <p>Please select your designated access level to continue securely.</p>
         </div>
-        <div class="card">
-            <h2>Doctor Dashboard</h2>
-            <h3><a href="{% url 'doctor_signin' %}">Signin</a> here</h3>
+
+        <div class="portal-grid">
+
+            <div class="portal-card">
+                <div class="portal-icon">🏥</div>
+                <h3>Hospital Dashboard</h3>
+                <p>Manage facility operations, oversee doctor schedules, and handle patient registries.</p>
+                <div class="portal-actions">
+                    <a href="{% url 'hospital_signin' %}" class="btn-auth btn-login">Sign In</a>
+                    <a href="{% url 'hospital_signup' %}" class="btn-auth btn-register">Create Account</a>
+                </div>
+            </div>
+
+            <div class="portal-card">
+                <div class="portal-icon">👨‍⚕️</div>
+                <h3>Doctor Dashboard</h3>
+                <p>Access your daily appointment schedule, update patient statuses, and view medical records.</p>
+                <div class="portal-actions">
+                    <a href="{% url 'doctor_signin' %}" class="btn-auth btn-login" style="width: 100%;">Sign In Securely</a>
+                </div>
+                <div class="card-footer-note">
+                    <p>Doctors must be registered by a Hospital Admin.</p>
+                </div>
+            </div>
+
         </div>
     </div>
     {% endif %}

@@ -5,28 +5,133 @@
 {% block extra_styles%}
 
 <style>
-    .contents{
-        display: block;
-        width: 100%;
-    }
-    .card {
-        height: 40vh;
-    }
-    .redirect-card{
+/* Base Reset & Typography */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background-color: #f8fafc; }
+
+    .nav-logo {
+        font-size: 1.8em;
+        font-weight: bold;
+        color: #2563eb !important; /* The !important forces the blue color to override any global white text rules */
+        text-decoration: none;
         display: flex;
+        align-items: center;
+        gap: 8px; /* Adds a little space if you are using an image icon next to the text */
     }
+
+    /* 2. Fix the Log In Button (Text was hiding) */
+    .btn-login {
+        color: #2563eb !important; /* Forces the text to be blue initially */
+        border: 2px solid #2563eb;
+        background-color: white; /* Ensures the background isn't transparently picking up the wrong color */
+    }
+
+    .btn-login:hover {
+        background-color: #eff6ff;
+        color: #1e40af !important; /* Keeps text dark blue on hover */
+    }
+
+    /* 3. Fix the Sign Up Button (Text was disappearing on hover) */
+    .btn-register {
+        background-color: #2563eb;
+        color: white !important;
+        border: 2px solid #2563eb;
+    }
+
+    .btn-register:hover {
+        background-color: #1d4ed8 !important; /* Slightly darker blue background */
+        color: white !important; /* Forces the text to STAY white instead of blending into the background */
+        border-color: #1d4ed8;
+    }
+    /* Navigation Bar */
+    .navbar { background-color: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 15px 20px; }
+    .nav-links a { margin: 0 15px; text-decoration: none; color: #475569; font-weight: 500; transition: color 0.3s; }
+    .nav-links a:hover { color: #2563eb; }
+    .nav-auth a { text-decoration: none; padding: 8px 20px; border-radius: 6px; font-weight: 600; margin-left: 10px; transition: 0.3s; }
+
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(rgba(37, 99, 235, 0.9), rgba(30, 64, 175, 0.9)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+        color: white; padding: 100px 20px; text-align: center;
+    }
+    .hero-content { max-width: 800px; margin: 0 auto; }
+    .hero-content h1 { font-size: 3.5em; margin-bottom: 20px; line-height: 1.2; }
+    .hero-content p { font-size: 1.2em; margin-bottom: 30px; opacity: 0.9; }
+    .hero-buttons a { display: inline-block; padding: 15px 30px; border-radius: 8px; font-size: 1.1em; font-weight: bold; text-decoration: none; margin: 10px; transition: 0.3s; }
+    .btn-primary { background-color: #10b981; color: white; } /* Emerald Green CTA */
+    .btn-primary:hover { background-color: #059669; transform: translateY(-2px); }
+    .btn-secondary { background-color: transparent; color: white; border: 2px solid white; }
+    .btn-secondary:hover { background-color: white; color: #1e40af; }
+
+    /* Features Section */
+    .features-section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
+    .section-title { text-align: center; margin-bottom: 50px; }
+    .section-title h2 { font-size: 2.5em; color: #1e293b; }
+    .section-title p { color: #64748b; font-size: 1.1em; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .feature-card { background: white; padding: 40px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; transition: transform 0.3s; }
+    .feature-card:hover { transform: translateY(-10px); }
+    .feature-icon { font-size: 3em; margin-bottom: 20px; }
+    .feature-card h3 { font-size: 1.5em; color: #1e293b; margin-bottom: 15px; }
+    .feature-card p { color: #64748b; }
+
+    /* Footer */
+    .footer { background-color: #1e293b; color: white; text-align: center; padding: 30px 20px; margin-top: 50px; }
 </style>
 
 {% endblock %}
 
 {% block content %}
-
-<div class="contents">
-    <div class="card">
-        <div class="redirect-card">
-            
-        </div> 
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">⚕️ Medico</a>
+            <div class="nav-links">
+                <a href="{% url 'user_home' %}">Users</a>
+                <a href="{% url 'hospital_home' %}">Hospital</a>
+            </div>
+        </div>
+    </nav>
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 style="color: white">Modern Healthcare at Your Fingertips</h1>
+            <p>Skip the waiting room. Book your consultations, manage your medical records, and connect with top-tier specialists securely from anywhere.</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn-primary">Book an Appointment</a>
+                <a href="#features" class="btn-secondary">Learn More</a>
+            </div>
+        </div>
     </div>
-</div>
+
+    <section id="features" class="features-section">
+        <div class="section-title">
+            <h2>Why Choose Our System?</h2>
+            <p>Designed for seamless patient care and efficient hospital management.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📅</div>
+                <h3>Smart Scheduling</h3>
+                <p>Our real-time booking engine guarantees zero double-bookings, ensuring you always get your chosen time slot.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📁</div>
+                <h3>Digital Medical Records</h3>
+                <p>Securely upload and store your X-rays, lab reports, and prescriptions in your personal medical gallery.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">👨‍⚕️</div>
+                <h3>Expert Specialists</h3>
+                <p>Browse through our directory of verified hospital doctors and filter by department specialization.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 Medico Healthcare Management System. All rights reserved.</p>
+    </footer>
 
 {% endblock %}

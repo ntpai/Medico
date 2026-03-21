@@ -1,10 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'hospital/base_hospital.html' %}
+
+{% block extra_styles %}
+    <style>
+    .date-badge {
+        background: #f1f5f9;
+        color: #475569;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9em;
+        border: 1px solid #e2e8f0;
+    }
+    .card {
+        margin: 2rem auto;
+        width: 90%;
+    }
+    </style>
+
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h3>Today's Appointments</h3>
+        <span class="date-badge">{{ today|date:"D, d M Y" }}</span>
+    </div>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Date & Time</th>
+                <th>Current Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            <tr>
+                <td><strong>{{ appointment.patient.user.first_name }}</strong></td>
+                <td>Dr. {{ appointment.doctor.user.first_name }}</td>
+                <td>{{ appointment.appointment_date }} at {{ appointment.appointment_time }}</td>
+                <td>
+                    <span class="status-badge status-{{ appointment.status|lower }}">
+                        {{ appointment.status }}
+                    </span>
+                </td>
+                <td>
+                    <form method="POST" style="display: flex; gap: 5px;">
+                        {% csrf_token %}
+                        <input type="hidden" name="appointment_id" value="{{ appointment.id }}">
+                        <label>
+                            Update appointment status
+                            <select name="status" class="status-select">
+                                <option value="Pending" {% if appointment.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                <option value="Confirmed" {% if appointment.status == 'Confirmed' %}selected{% endif %}>Confirm</option>
+                                <option value="Completed" {% if appointment.status == 'Completed' %}selected{% endif %}>Complete</option>
+                                <option value="Cancelled" {% if appointment.status == 'Cancelled' %}selected{% endif %}>Cancel</option>
+                            </select>
+                        </label>
+                        <button type="submit" class="btn-update">Update</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 40px; color: #94a3b8;">
+                    No appointments scheduled for today.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

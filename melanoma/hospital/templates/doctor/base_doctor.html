@@ -7,10 +7,9 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="icon" type="image/png" href="{% static 'icons/favicon.png' %}">
-    <style>
     {% block extra_styles %}
     {% endblock %}
-    </style>
+
 
 </head>
 <body>
@@ -18,11 +17,17 @@
         <p class="navbar-brand">
             <a href="{% url 'home' %}">Medico</a>
         </p>
-        <!-- This dashboard does not need to check if the user is authenticated because the page needs login to view  -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="animated-toast toast-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
         <div>
-            Welcome, Dr. {{ user.first_name }}&nbsp;&nbsp;|
+            {% if user.is_authenticated %}
             <a href="{% url 'doctor_dashboard' %}">Dashboard</a>
-            <a href="#">Appointments</a>
+            <a href="{% url 'doctor_appointments' %}">Appointments</a>
+            <a href="{% url 'hospital_logout' %}">Logout</a>
+            {% endif %}
         </div>
     </nav>
     <div id="content">

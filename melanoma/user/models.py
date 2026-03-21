@@ -74,3 +74,22 @@ class Image(models.Model):
     upload_at = models.DateTimeField(auto_now_add=True)
     user_notes = models.CharField(max_length=250)
     image = models.ImageField(upload_to=upload_to,blank=True, null=True)
+
+class Appointment(models.Model):
+    STATUS_CHOICE  = (
+        ('Pending', 'Pending'),
+        ('Confirmed', 'Confirmed'),
+        ('Cancelled', 'Cancelled'),
+        ('Completed', 'Completed'),
+    )
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="my_appointments")
+    doctor = models.ForeignKey(DoctorProfile, on_delete=models.CASCADE, related_name="doctor_appointments")
+    appointment_date = models.DateField()
+    appointment_time = models.TimeField()
+    reason_for_visit = models.TextField(blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICE, default="Pending")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.patient.user.first_name} with Dr. {self.doctor.user.first_name} on \
+            {self.appointment_date} - {self.appointment_time}"

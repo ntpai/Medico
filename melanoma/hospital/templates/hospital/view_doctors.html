@@ -6,24 +6,21 @@
 
     <style>
         .container {
-            width: 90%;
+            width: 100%;
             display: flex;
             flex-wrap: wrap;
-            gap: 2rem;
-            justify-content: space-evenly;
+            gap: 20px;
+            padding: 1rem 0.5rem;
         }
         .card {
-            width: 40%;
+            padding: 1rem;
+            width: 26%;
             text-align: left;
         }
     </style>
 {% endblock %}
 {% block content %}
-    <div>
-
-    </div>
-
-    <div class="container">
+    <div class="container ">
         {% for  doctor in doctors_list %}
         <div class="card">
             <p>Name: Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}</p>

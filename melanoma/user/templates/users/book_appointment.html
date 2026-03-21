@@ -1,10 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'users/base_users.html' %}
+{% block extra_styles %}
+
+    <style>
+        .card {
+            width: 40%;
+        }
+    </style>
+
+{% endblock %}
+{% block content %}
+    {% for data in doctor_data %}
+    <div class="card container">
+    <h2>Book Appointment with Dr. {{ data.user.first_name }} {{ data.user.last_name }}</h2>
+    <p><strong>Hospital:</strong> {{ data.hospital.hospital_name }}</p>
+
+    <hr>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="forms-div">
+                <label for="appointment_date">Select Date:</label>
+                <input type="date" name="appointment_date" id="appointment_date" required>
+            </div>
+
+            <div class="forms-div">
+                <label for="appointment_time">Select Time Slot:</label>
+                <select name="appointment_time" id="appointment_time" required>
+                    <option value="" disabled selected>-- Choose a Time --</option>
+                    <option value="09:00">09:00 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="14:00">02:00 AM</option>
+                    <option value="15:00">03:00 PM</option>
+                    <option value="16:00">04:00 PM</option>
+                </select>
+            </div>
+
+            <div class="forms-div">
+                <label for="reason">Reason for Visit (Optional):</label>
+                <textarea name="reason" id="reason" rows="3"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Confirm Booking</button>
+            <button type="submit" class="btn btn-secondary"><a href="{% url 'patient_hospitals_list' %}">Cancel Booking</a></button>
+        </form>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. Get current date
+        let tomorrow = new Date();
+
+        // 2. Add one day to it
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        // 3. Format it to YYYY-MM-DD for the HTML input
+        let minDate = tomorrow.toISOString().split('T')[0];
+
+        // 4. Lock the calendar
+        document.getElementById("appointment_date").setAttribute('min', minDate);
+    });
+
+    const dateInput = document.getElementById('appointment_date');
+    const timeDropdown = document.getElementById('appointment_time');
+
+    const doctorId = "{{ data.user.id }}";
+
+    dateInput.addEventListener('change', function() {
+        const selectedDate = this.value; // e.g., "2026-03-15"
+        Array.from(timeDropdown.options).forEach(option => {
+            option.disabled = false;
+            // THE FIX: Gently remove the warning text without destroying your original formatting
+            option.text = option.text.replace(' (Already Booked)', '');
+            option.style.color = ""; // Reset the color back to normal
+        });
+
+        if (selectedDate) {
+            fetch(`/user/api/booked-times/${doctorId}/${selectedDate}/`)
+                .then(response => response.json())
+                .then(data => {
+                    const takenTimes = data.booked_times;
+
+                    // 4. Disable matching times safely!
+                    Array.from(timeDropdown.options).forEach(option => {
+                        // We still use option.value for the strict math comparison...
+                        if (takenTimes.includes(option.value.substring(0, 5))) {
+                            option.disabled = true;
+                            // THE FIX: Just append to the existing text!
+                            option.text = option.text + " (Already Booked)";
+                            option.style.color = "red";
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching booked times:', error));
+        }
+    });
+</script>
+{% endfor %}
+{% endblock %}

@@ -8,20 +8,19 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="icon" type="image/png" href="{% static 'icons/favicon.png' %}">
 
-    {% block extra_styles %} 
-        
+    {% block extra_styles %}
+    <style>
+
+    </style>
     {% endblock %}
     
 </head>
 <body>
-    <nav class="navbar">
-        <p class="navbar-brand"><a href="/">Medico</a></p>
-        <div>
-            <a href="{% url 'user_home' %}">Users</a>
-            <a href="{% url 'hospital_home' %}">Hospital/Doctor</a>
-        </div>
-    </nav>
-    <div id="content">
+
+    {% for message in messages %}
+        <div class="animated-toast toast-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+    <div>
         {% block content %}
         
         {% endblock %}

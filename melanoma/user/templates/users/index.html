@@ -2,19 +2,171 @@
 
 {% block title %}User Home{% endblock %}
 
+
+{% block extra_styles %}
+    <style> /* Main Container */
+/* Container */
+.patient-dashboard-container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Welcome Banner */
+.patient-welcome-banner {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+/* Two-Card Grid Layout */
+.patient-actions-grid.two-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Forces two equal columns */
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.action-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    padding: 30px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.action-card:hover {
+    transform: translateY(-5px);
+    border-color: #3b82f6;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.action-icon { font-size: 3.5em; margin-bottom: 15px; }
+.action-card h3 { color: #1e293b; margin-bottom: 10px; font-size: 1.4em; }
+.action-card p { color: #64748b; font-size: 0.95em; margin-bottom: 20px; }
+
+/* Visual "Button" inside the card */
+.card-btn {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: #eff6ff;
+    color: #2563eb;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+/* Appointment Table Styling */
+.data-panel {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 25px;
+}
+
+.panel-header h3 { margin: 0 0 20px 0; color: #1e293b; }
+
+.patient-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.patient-table th {
+    text-align: left;
+    padding: 12px;
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 0.85em;
+    text-transform: uppercase;
+}
+
+.patient-table td {
+    padding: 15px 12px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+}
+
+/* Status Tags */
+.status-tag {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+.status-tag.confirmed { background: #d1fae5; color: #065f46; }
+
+/* Responsive: Stack cards on small mobile screens */
+@media (max-width: 600px) {
+    .patient-actions-grid.two-cards { grid-template-columns: 1fr; }
+}    </style>
+{% endblock %}
 {% block content %}
+<div class="patient-dashboard-container">
 
-{% if user.is_authenticated %}
-    <h1>Welcome, {{ user.get_username }}</h1>
-{% else %}
-    <h1>
-        Please <a href="{% url 'user_signup' %}">Signup</a> or <a href="{% url 'user_signin' %}">Signin</a>
-    </h1>
+    <div class="patient-welcome-banner">
+        <div class="banner-text">
+            <h2 style="color: white">Welcome back, {{ user.first_name|default:user.username }}! 👋</h2>
+            <p>Your health journey, managed in one secure place.</p>
+        </div>
+    </div>
 
-{% endif %}
+    <div class="patient-actions-grid two-cards">
 
-{% for message in messages %}
-    <div class="alert alert-danger">{{ message }}</div>
-{% endfor %}
+        <a href="{% url 'patient_hospitals_list' %}" class="action-card">
+            <div class="action-icon">👨‍⚕️</div>
+            <h3>Find a Doctor</h3>
+            <p>Search for specialists and book a new consultation.</p>
+            <span class="card-btn">Search Now</span>
+        </a>
 
+        <a href="{% url 'upload_image' %}" class="action-card">
+            <div class="action-icon">📸</div>
+            <h3>Upload Images</h3>
+            <p>Add new images to your records.</p>
+            <span class="card-btn">Upload Now</span>
+        </a>
+
+    </div>
+
+    <div class="data-panel">
+        <div class="panel-header">
+            <h3>Your Recent Appointments</h3>
+        </div>
+
+        <div class="appointment-table-wrapper">
+            <table class="patient-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Doctor</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Mar 14, 2026</strong></td>
+                        <td>Dr. Smith</td>
+                        <td>Cardiology</td>
+                        <td><span class="status-tag confirmed">Confirmed</span></td>
+                    </tr>
+                    {% if not appointments %}
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 30px; color: #64748b;">
+                            No recent appointment history found.
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
 {% endblock %}

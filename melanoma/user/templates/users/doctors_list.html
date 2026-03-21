@@ -4,11 +4,35 @@
 
 {% block extra_styles%}
 
+    <style>
+        .container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding-left: 30px;
+        }
+        .card {
+            width: 15%;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+    </style>
+
 {% endblock %}
 
 {% block content%}
 
-    {% for field in doctors %}
-        {{ field }}
+    <div class="container">
+        {% for field in doctors %}
+        <div class="card">
+            <h3>Dr. {{ field.user.get_full_name }}</h3>
+            <p><strong>Specialization:</strong> {{ field.specialization }}</p>
+            <button class="btn btn-primary"><a href="{% url 'patient_book_doctor' field.user.id %}">Book</a></button>
+        </div>
+
     {% endfor %}
+    </div>
 {% endblock %}
