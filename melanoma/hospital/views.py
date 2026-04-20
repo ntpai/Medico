@@ -50,10 +50,12 @@ def hospital_dashboard(request):
 
     today = timezone.localtime(timezone.now()).date()
 
+    hospital_profile_id = HospitalProfile.objects.filter(user_id=request.user.pk).first()
+
     # 2. Calculate the core hospital statistics
     # Note: If you don't have a PatientProfile model, you can use:
     # CustomUser.objects.filter(is_patient=True).count()
-    total_doctors = DoctorProfile.objects.count()
+    total_doctors = DoctorProfile.objects.filter(hospital_id=hospital_profile_id).count()
     total_patients = Patient.objects.count()
 
     # 3. Count ALL appointments across the entire hospital for today
