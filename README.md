@@ -1,6 +1,7 @@
 # Medico
 
-This project uses python3.12 version and has been tested in linux systems only( if testing in other OS, just refer to the below simple setup and edit the commands based on your device).
+This project uses python3.12 version.
+Setup steps should be same for every OS.
 
 ## Setup 
 
