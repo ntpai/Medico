@@ -52,27 +52,20 @@ def hospital_dashboard(request):
 
     hospital_profile_id = HospitalProfile.objects.filter(user_id=request.user.pk).first()
 
-    # 2. Calculate the core hospital statistics
-    # Note: If you don't have a PatientProfile model, you can use:
-    # CustomUser.objects.filter(is_patient=True).count()
     total_doctors = DoctorProfile.objects.filter(hospital_id=hospital_profile_id).count()
-    total_patients = Patient.objects.count()
 
-    # 3. Count ALL appointments across the entire hospital for today
+    # Count ALL appointments across the entire hospital for today
     appointments_today = Appointment.objects.filter(
         appointment_date__year=today.year,
         appointment_date__month=today.month,
         appointment_date__day=today.day
     ).count()
 
-    # 4. Bundle the stats into the context dictionary
     context = {
         'total_doctors': total_doctors,
-        'total_patients': total_patients,
         'appointments_today': appointments_today,
     }
 
-    # 5. Render the template (make sure your HTML file name matches here)
     return render(request, 'hospital/index.html', context)
 
 def signin(request):

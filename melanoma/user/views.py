@@ -4,10 +4,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, get_user_model
 from django.contrib import messages
 from functools import wraps
+
+from pandas.core.dtypes.inference import is_list_like
+
 from detection_model.predictor import predict_melanoma
 from detection_model.visualizer import visualizer
 from .forms import *
-from .models import Image, DoctorProfile, HospitalProfile, Appointment
+from .models import Image, DoctorProfile, HospitalProfile, Appointment, CustomUser
 from datetime import datetime, date
 User = get_user_model()
 
@@ -35,7 +38,32 @@ def index(request):
     if request.user.is_authenticated:
         user_id = request.user.id
         print(f"Login ID: {user_id}")
-    return render(request, 'users/index.html')
+        patient_profile_id = Patient.objects.get(user_id=user_id)
+
+        appointment = Appointment.objects.filter(patient_id=patient_profile_id).values('appointment_date', 'appointment_time', 'doctor_id', 'status')
+
+        items = [[item['appointment_date'], item['appointment_time'], item['doctor_id'], item['status']] for item in appointment]
+
+        id_list = [item[2] for item in items]
+
+        doctors = (DoctorProfile.objects
+                     .filter(id__in=id_list)
+                     .values('id', 'user__first_name', 'user__last_name'))
+        doctor_mapping = {}
+
+        for doc in doctors:
+            full_name = f"{doc['user__first_name']} {doc['user__last_name']}"
+            doctor_mapping[doc['id']] = full_name
+
+        for item in items:
+            doc_id = item[2]
+            item[2] = doctor_mapping.get(doc_id, "Unknown")
+
+        print(items)
+        context = {
+            'appointment_details' : items
+        }
+    return render(request, 'users/index.html', context=context)
 
 def signup(request):
     if request.method == 'POST':
