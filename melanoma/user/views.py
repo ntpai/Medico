@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.transaction import commit
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, get_user_model
@@ -162,6 +163,9 @@ def image_result(request):
             'message': prediction['message'],
             'label': "Error"
         }
+    image_path.accuracy = prediction['probability']
+    image_path.result = prediction['label']
+    image_path.save()
     return render(request, 'users/image_result.html',context=context)
 
 @login_required

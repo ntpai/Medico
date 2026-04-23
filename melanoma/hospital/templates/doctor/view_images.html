@@ -53,6 +53,8 @@
                 <div class="card-body">
                     <p class="upload-date">📅 {{ img.upload_at|date:"F d, Y" }}</p>
                     <p class="user-notes"><strong>Notes:</strong> {{ img.user_notes }}</p>
+                    <p class="user-notes"><strong>Result:</strong> {{ img.result }}</p>
+                    <p class="user-notes"><strong>Accuracy:</strong> {{ img.accuracy }}</p>
                 </div>
             </div>
             {% empty %}

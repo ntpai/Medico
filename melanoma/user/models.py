@@ -74,6 +74,8 @@ class Image(models.Model):
     upload_at = models.DateTimeField(auto_now_add=True)
     user_notes = models.CharField(max_length=250)
     image = models.ImageField(upload_to=upload_to,blank=True, null=True)
+    accuracy = models.FloatField(default=0.0)
+    result = models.CharField(max_length=20, default="Pending")
 
 class Appointment(models.Model):
     STATUS_CHOICE  = (

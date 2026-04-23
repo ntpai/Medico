@@ -275,7 +275,7 @@ def doctor_appointments(request):
             pass
     appointments = Appointment.objects.filter(
         doctor=doctor_profile,
-        # appointment_date=today
+        appointment_date=today
     ).order_by('appointment_time')
 
     context = {
